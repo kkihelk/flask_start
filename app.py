@@ -18,16 +18,19 @@ def about():
 def framework():
     return render_template("framework.html")
 
-@app.route('/form')
+@app.route('/form', methods=['GET', 'POST'])
 def form():
-    num1 = request.args.get('num1') # args : arguments 입력인자. 매개변수를 입력할 때 사용하는 말
-    num2 = request.args.get('num2')
-    if num1 and num2:
-        total = float(num1) + float(num2)
+    if request.method == "GET": # GET 방식 요청일 때
+        return render_template("form.html")
+    elif request.method == "POST": # POST 방식 요청일 때
+        num1 = request.form.get('num1') 
+        num2 = request.form.get('num2')
+        
+        if num1 and num2:
+            total = float(num1) + float(num2)
+            print(total)
 
-        print(total)
-
-    return render_template('/form.html')
+        return render_template("form.html")
 
 # 앱 실행
 if __name__ == "__main__":
